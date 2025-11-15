@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrega</title>
+</head>
+<body>
+  <h1 id="saudacao"></h1>
+
+  <p>Aqui vai o conteúdo final da entrega.</p>
+
+  <button onclick="window.location.href='/'">
+    Voltar ao início
+  </button>
+
+  <script>
+    const nome = localStorage.getItem("lead_nome") || "Visitante";
+    document.getElementById("saudacao").innerText =
+      `Olá, ${nome}!`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "nome": "João Silva",
+    "email": "joao.silva@email.com"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "nome": "Maria Santos",
+    "email": "maria.santos@email.com"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "nome": "Pedro Costa",
+    "email": "pedro.costa@email.com"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "nome": "Ana Oliveira",
+    "email": "ana.oliveira@email.com"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "nome": "Carlos Pereira",
+    "email": "carlos.pereira@email.com"
+  }
+]

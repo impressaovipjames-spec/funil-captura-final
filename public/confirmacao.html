@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmação</title>
+</head>
+<body>
+  <h1 id="mensagem"></h1>
+
+  <button onclick="window.location.href='/entrega'">
+    Ir para a Entrega
+  </button>
+
+  <script>
+    const nome = localStorage.getItem("lead_nome") || "Visitante";
+    document.getElementById("mensagem").innerText =
+      `Cadastro Confirmado, ${nome}!`;
+  </script>
+</body>
+</html>

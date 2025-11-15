@@ -1,0 +1,191 @@
+FUNIL DE CAPTURA - ESTRUTURA DE ARQUIVOS
+=========================================
+
+BACKEND (Node.js + Express)
+---------------------------
+server/routes.ts       - Rotas da API com validação, sanitização e error handling
+                       - POST /api/leads (criar lead)
+                       - GET /api/leads (listar leads da memória)
+                       - GET /leads (debug: conteúdo de leads.json)
+                       - GET /healthcheck (status do servidor)
+server/storage.ts      - Interface de armazenamento com persistência e backup automático
+server/index.ts        - Servidor Express principal
+
+SCHEMA COMPARTILHADO
+--------------------
+shared/schema.ts       - Definição de tipos e validação (Lead, InsertLead)
+
+FRONTEND (React)
+----------------
+client/src/pages/captura.tsx      - Página de captura (formulário nome/email)
+client/src/pages/confirmacao.tsx  - Página de confirmação com nome do lead
+client/src/pages/entrega.tsx      - Página de entrega com saudação personalizada
+client/src/App.tsx                - Roteamento da aplicação
+client/index.html                 - HTML base
+
+PERSISTÊNCIA DE DADOS
+---------------------
+leads.json             - Arquivo JSON com todos os leads capturados
+leads.bak.json         - Backup automático criado a cada novo lead
+seeds.json             - Dados de exemplo para popular o banco
+scripts/export-leads.js - Script para exportar leads.json para leads.csv
+scripts/reset-funnel.js - Script para limpar leads.json e leads.bak.json
+scripts/seed-leads.js   - Script para popular leads.json com dados de exemplo
+
+TESTES
+------
+tests/manual-tests.js  - Testes manuais sem frameworks
+                       - Test 1: GET /healthcheck
+                       - Test 2: POST /api/leads (sucesso)
+                       - Test 3: POST /api/leads (email inválido)
+                       - Test 4: POST /api/leads (campos faltando)
+                       - Test 5: Sanitização de entrada
+                       - Test 6: GET /api/leads
+                       - Test 7: Criação de backup
+                       - Test 8: Validação de email com regex
+                       - Test 9: Respostas padronizadas
+
+DOCUMENTAÇÃO
+------------
+README.md              - Documentação principal do projeto
+api-spec.md            - Blueprint completo da API (rotas, inputs, outputs)
+migration-notes.md     - Guia de migração para Python/Flask
+ESTRUTURA-FUNIL.txt    - Este arquivo (estrutura detalhada)
+package.json           - Dependências do projeto
+
+FLUXO DO FUNIL
+--------------
+1. Usuário acessa "/" e vê formulário de captura
+2. Preenche nome e email
+3. Ao enviar, dados são validados e sanitizados
+   - Middleware valida estrutura da requisição
+   - Validação de email com regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+   - Sanitização remove caracteres perigosos (<>)
+   - Lead salvo em memória
+   - Lead persistido em leads.json automaticamente
+   - Backup criado em leads.bak.json
+   - Nome armazenado em localStorage
+4. Redirecionamento para "/confirmacao"
+   - Exibe mensagem personalizada com nome do lead
+5. Link para acessar "/entrega"
+   - Exibe saudação personalizada com nome do lead
+
+SEGURANÇA E VALIDAÇÃO
+----------------------
+- Middleware customizado valida requisições POST /api/leads
+- Validação de email com regex robusto
+- Sanitização de entrada remove caracteres <> (XSS básico)
+- Validação de tipos (string) antes do processamento
+- Error handler universal captura todos os erros
+- Respostas padronizadas: { success, message, data }
+- Sem bibliotecas externas de segurança
+
+ROTAS DA API
+------------
+POST /api/leads
+  Request: { nome: string, email: string }
+  Response: { success: bool, message: string, data: Lead }
+
+GET /api/leads
+  Response: { success: bool, message: string, data: Lead[] }
+
+GET /leads (Debug)
+  Response: { success: bool, message: string, data: { total: number, leads: Lead[] } }
+
+GET /healthcheck
+  Response: { status: "ok" }
+
+SCRIPTS UTILITÁRIOS
+-------------------
+node scripts/seed-leads.js
+  - Importa dados de seeds.json para leads.json
+  - Cria backup antes de sobrescrever
+  - Exibe lista de leads importados
+
+node scripts/export-leads.js
+  - Exporta leads.json para leads.csv
+  - Formato CSV: id,nome,email
+
+node scripts/reset-funnel.js
+  - Remove leads.json
+  - Remove leads.bak.json
+  - Útil para reiniciar o funil do zero
+
+TESTES MANUAIS
+--------------
+node tests/manual-tests.js
+  - Executa 9 testes automatizados
+  - Valida todas as rotas principais
+  - Verifica validação de email
+  - Testa sanitização
+  - Verifica criação de backup
+  - Sem frameworks de teste externos
+  - Usa apenas módulo http nativo do Node.js
+
+DADOS DE EXEMPLO
+----------------
+seeds.json contém 5 leads de exemplo:
+  - João Silva (joao.silva@email.com)
+  - Maria Santos (maria.santos@email.com)
+  - Pedro Costa (pedro.costa@email.com)
+  - Ana Oliveira (ana.oliveira@email.com)
+  - Carlos Pereira (carlos.pereira@email.com)
+
+MIGRAÇÃO PARA PYTHON/FLASK
+---------------------------
+Ver migration-notes.md para:
+  - Conversão de arquivos TypeScript → Python
+  - Substituição de bibliotecas (Express → Flask, Zod → validação manual)
+  - Exemplos de código lado a lado
+  - Estrutura de diretórios equivalente
+  - Funções de sanitização e validação
+  - Middleware e error handling
+
+DOCUMENTAÇÃO DA API
+-------------------
+Ver api-spec.md para:
+  - Descrição detalhada de cada endpoint
+  - Exemplos de request/response
+  - Validações e regras de negócio
+  - Status codes
+  - Exemplos com cURL e JavaScript
+  - Formato de objetos de dados
+
+TECNOLOGIAS UTILIZADAS
+----------------------
+- Backend: Express.js + TypeScript
+- Frontend: React + Wouter (routing)
+- Validação: Zod + Regex nativo
+- Armazenamento: Memória + leads.json (persistência)
+- Backup: Cópia automática (leads.bak.json)
+- Placeholders dinâmicos: localStorage
+- Exportação: Node.js fs (sem bibliotecas extras)
+- Middleware: Função nativa sem libs externas
+- Sanitização: String replace nativo
+- Error handling: Middleware Express nativo
+- Testes: Node.js http nativo (sem frameworks)
+- Sem banco de dados externo
+- Sem autenticação
+- Sem complexidade adicional
+
+MELHORIAS IMPLEMENTADAS
+------------------------
+✓ Persistência em arquivo JSON
+✓ Placeholders dinâmicos nas páginas
+✓ Script de exportação para CSV
+✓ Script de reset do funil
+✓ Script de seed com dados de exemplo
+✓ Middleware de validação de requisições
+✓ Validação de email com regex
+✓ Sanitização de entrada de dados
+✓ Error handler universal
+✓ Respostas padronizadas (success, message, data)
+✓ Rota de healthcheck
+✓ Backup automático a cada novo lead
+✓ Rota de debug para visualizar leads.json
+✓ Testes manuais completos sem frameworks
+✓ Documentação completa da API (Blueprint)
+✓ Guia de migração para Python/Flask
+✓ README.md com documentação
+✓ Sem bibliotecas adicionais
+✓ Implementação extremamente leve e simples

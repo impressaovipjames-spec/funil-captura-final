@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Captura</title>
+</head>
+<body>
+  <h1>Funil de Captura</h1>
+
+  <form id="leadForm">
+    <label>Nome:</label><br />
+    <input type="text" id="nome" required /><br /><br />
+
+    <label>Email:</label><br />
+    <input type="email" id="email" required /><br /><br />
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("lead_nome", nome);
+        window.location.href = "/confirmacao";
+      } else {
+        alert("Erro: " + data.message);
+      }
+    });
+  </script>
+</body>
+</html>

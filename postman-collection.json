@@ -1,0 +1,281 @@
+{
+  "info": {
+    "name": "Funil de Captura API",
+    "description": "Collection completa para testar todas as rotas do funil de captura",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/healthcheck",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["healthcheck"]
+        },
+        "description": "Verifica o status do servidor"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/healthcheck",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["healthcheck"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"ok\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Criar Lead",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao.silva@email.com\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/leads",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "leads"]
+        },
+        "description": "Cria um novo lead no sistema"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao.silva@email.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/leads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "leads"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Lead cadastrado com sucesso\",\n  \"data\": {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"nome\": \"João Silva\",\n    \"email\": \"joao.silva@email.com\"\n  }\n}"
+        },
+        {
+          "name": "Email Inválido",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"invalid-email\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/leads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "leads"]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": false,\n  \"message\": \"Email inválido\",\n  \"data\": null\n}"
+        },
+        {
+          "name": "Campos Faltando",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/leads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "leads"]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": false,\n  \"message\": \"Nome e email são obrigatórios\",\n  \"data\": null\n}"
+        }
+      ]
+    },
+    {
+      "name": "Listar Leads",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/leads",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "leads"]
+        },
+        "description": "Retorna todos os leads armazenados"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/leads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "leads"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Leads recuperados com sucesso\",\n  \"data\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"nome\": \"João Silva\",\n      \"email\": \"joao.silva@email.com\"\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440002\",\n      \"nome\": \"Maria Santos\",\n      \"email\": \"maria.santos@email.com\"\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Debug - Conteúdo de leads.json",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/leads",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["leads"]
+        },
+        "description": "Retorna o conteúdo direto do arquivo leads.json para debug"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/leads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["leads"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Conteúdo de leads.json\",\n  \"data\": {\n    \"total\": 2,\n    \"leads\": [\n      {\n        \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n        \"nome\": \"João Silva\",\n        \"email\": \"joao.silva@email.com\"\n      },\n      {\n        \"id\": \"550e8400-e29b-41d4-a716-446655440002\",\n        \"nome\": \"Maria Santos\",\n        \"email\": \"maria.santos@email.com\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "name": "Arquivo Não Existe",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/leads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["leads"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Arquivo leads.json não existe\",\n  \"data\": {\n    \"total\": 0,\n    \"leads\": []\n  }\n}"
+        }
+      ]
+    }
+  ]
+}
