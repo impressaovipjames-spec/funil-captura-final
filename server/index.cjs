@@ -8,7 +8,9 @@ const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
 const app = express();
-const PORT = 3000;
+
+// *** PORTA CORRIGIDA PARA FUNCIONAR NO RENDER ***
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -279,10 +281,9 @@ app.use((err, req, res, next) => {
 });
 
 // ======================================
-// 13 — SERVIDOR
+// 13 — SERVIDOR (CORRIGIDO PARA RENDER)
 // ======================================
 app.listen(PORT, () => {
     logEvent("SERVER_START", { port: PORT });
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
-
