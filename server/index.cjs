@@ -1,12 +1,12 @@
 // ======================================
 // FUNIL MINIMALISTA — BACKEND EXPRESS
-// INDEX FINAL — FASE 2 COMPLETA
+// INDEX FINAL — FASE 4 CORRIGIDA
 // ======================================
 
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const zlib = require("zlib");
+const compression = require("compression"); // <— NOVO: gzip correto para produção
 const app = express();
 
 // *** PORTA CORRIGIDA PARA FUNCIONAR NO RENDER ***
@@ -90,24 +90,9 @@ app.use((req, res, next) => {
 });
 
 // ======================================
-// 4 — COMPRESSÃO GZIP NATIVA
+// 4 — COMPRESSÃO GZIP OFICIAL E SEGURA
 // ======================================
-app.use((req, res, next) => {
-    const gzip = zlib.createGzip();
-    res.setHeader("Content-Encoding", "gzip");
-    const _write = res.write;
-    const _end = res.end;
-
-    res.write = chunk => gzip.write(chunk);
-    res.end = chunk => {
-        if (chunk) gzip.end(chunk);
-        else gzip.end();
-
-        gzip.on("data", d => _write.call(res, d));
-        gzip.on("end", () => _end.call(res));
-    };
-    next();
-});
+app.use(compression()); // <— Substitui o bloco antigo que quebrava respostas
 
 // ======================================
 // 5 — LOG DE REQUESTS + PERFORMANCE
@@ -281,7 +266,7 @@ app.use((err, req, res, next) => {
 });
 
 // ======================================
-// 13 — SERVIDOR (CORRIGIDO PARA RENDER)
+// 13 — SERVIDOR
 // ======================================
 app.listen(PORT, () => {
     logEvent("SERVER_START", { port: PORT });
