@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
-import { storage } from "./storage";
-import { insertLeadSchema } from "../shared/schema";
+import { storage } from "./storage.js";
+import { insertLeadSchema } from "../shared/schema.js";
 
 export async function registerRoutes(app: Express) {
 
