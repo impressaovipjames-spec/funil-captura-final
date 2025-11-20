@@ -1,6 +1,7 @@
 services:
-  - type: static_site
+  - type: web
     name: funil-frontend
+    env: static
     root: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: "dist"
