@@ -9,5 +9,5 @@ services:
     name: funil-backend
     env: node
     buildCommand: "npm install"
-    startCommand: "npm start"
+    startCommand: "node server.js"
     autoDeploy: true
