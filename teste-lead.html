@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Teste Lead Backend</title>
+</head>
+<body>
+<h2>Enviar Lead para Backend</h2>
+
+<form id="leadForm">
+  <label>Nome:</label><br />
+  <input type="text" id="nome" value="Teste Final"><br /><br />
+
+  <label>Email:</label><br />
+  <input type="email" id="email" value="teste@final.com"><br /><br />
+
+  <button type="submit">Enviar Lead</button>
+</form>
+
+<pre id="resposta" style="margin-top:20px; background:#eee; padding:10px;"></pre>
+
+<script>
+document.getElementById("leadForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email").value;
+
+  const resposta = await fetch("https://funil-captura-final-5-rpam.onrender.com/leads", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nome, email })
+  });
+
+  const json = await resposta.json();
+  document.getElementById("resposta").innerText = JSON.stringify(json, null, 2);
+});
+</script>
+
+</body>
+</html>
