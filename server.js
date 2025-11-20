@@ -11,7 +11,7 @@ const path = require("path");
 const compression = require("compression");
 const cors = require("cors");
 const app = express();
-
+console.log("🟥 ARQUIVO EM EXECUÇÃO:", __filename);
 app.set("trust proxy", true);
 app.disable("x-powered-by");
 
