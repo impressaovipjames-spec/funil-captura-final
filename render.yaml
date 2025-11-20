@@ -4,4 +4,10 @@ services:
     root: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: "dist"
-    domains: []
+
+  - type: web
+    name: funil-backend
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    autoDeploy: true
