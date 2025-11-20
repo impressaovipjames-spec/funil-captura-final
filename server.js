@@ -105,4 +105,28 @@ app.post("/leads", (req, res) => {
 app.listen(PORT, () => {
   writeLog(`Servidor iniciado na porta ${PORT}`);
   console.log(`Servidor online na porta ${PORT}`);
+/**
+ * ======================================
+ * ROTA GET /leads — VISUALIZAR LEADS
+ * ======================================
+ */
+app.get("/leads", (req, res) => {
+  const leadsPath = path.join(__dirname, "leads.json");
+
+  fs.readFile(leadsPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Erro ao ler leads.json:", err);
+      return res.status(500).json({ error: "Erro ao ler leads." });
+    }
+
+    try {
+      const leads = JSON.parse(data || "[]");
+      return res.json({ total: leads.length, leads });
+    } catch (e) {
+      console.error("Erro ao interpretar leads.json:", e);
+      return res.status(500).json({ error: "Erro ao interpretar dados." });
+    }
+  });
+});
+
 });
