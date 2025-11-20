@@ -1,7 +1,9 @@
-// ======================================
-// FUNIL CAPTURA FINAL — BACKEND EXPRESS
-// SERVER FINAL — FASE 11 (ARGOS VERSION)
-// ======================================
+/**
+ * ======================================
+ * FUNIL CAPTURA FINAL — BACKEND EXPRESS
+ * SERVER FINAL — FASE 11 (ARGOS VERSION)
+ * ======================================
+ */
 
 const express = require("express");
 const fs = require("fs");
@@ -26,7 +28,7 @@ app.use(compression());
 // ======================================
 app.use(
   cors({
-    origin: "https://funil-captura-final-5-rpam.onrender.com",
+    origin: "https://funil-captura-final-5.onrender.com",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
@@ -50,7 +52,7 @@ function writeLog(message) {
 }
 
 // ======================================
-// PATH PARA O ARQUIVO DE LEADS
+// PATH DO ARQUIVO DE LEADS
 // ======================================
 const leadsFilePath = path.join(__dirname, "leads.json");
 
@@ -60,7 +62,7 @@ if (!fs.existsSync(leadsFilePath)) {
 }
 
 // ======================================
-// ROTA PRINCIPAL (SAÚDE DO SERVIDOR)
+// ROTA PRINCIPAL (STATUS DO SERVIDOR)
 // ======================================
 app.get("/", (req, res) => {
   res.json({
@@ -92,7 +94,6 @@ app.post("/leads", (req, res) => {
 
     writeLog("Lead salvo com sucesso.");
     res.status(201).json({ success: true, lead: newLead });
-
   } catch (error) {
     writeLog("Erro ao salvar lead: " + error.message);
     res.status(500).json({ success: false, error: "Erro interno." });
@@ -100,20 +101,10 @@ app.post("/leads", (req, res) => {
 });
 
 // ======================================
-// START SERVER
+// ROTA GET /leads — LISTAR LEADS
 // ======================================
-app.listen(PORT, () => {
-  writeLog(`Servidor iniciado na porta ${PORT}`);
-  console.log(`Servidor online na porta ${PORT}`);
-/**
- * ======================================
- * ROTA GET /leads — VISUALIZAR LEADS
- * ======================================
- */
 app.get("/leads", (req, res) => {
-  const leadsPath = path.join(__dirname, "leads.json");
-
-  fs.readFile(leadsPath, "utf8", (err, data) => {
+  fs.readFile(leadsFilePath, "utf8", (err, data) => {
     if (err) {
       console.error("Erro ao ler leads.json:", err);
       return res.status(500).json({ error: "Erro ao ler leads." });
@@ -129,4 +120,10 @@ app.get("/leads", (req, res) => {
   });
 });
 
+// ======================================
+// START SERVER
+// ======================================
+app.listen(PORT, () => {
+  writeLog(`Servidor iniciado na porta ${PORT}`);
+  console.log(`Servidor online na porta ${PORT}`);
 });
