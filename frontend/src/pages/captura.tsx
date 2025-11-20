@@ -72,7 +72,7 @@ export default function Captura() {
 
   const mutation = useMutation({
     mutationFn: async (data: LeadPayload) => {
-      const res = await apiRequest("POST", "/api/leads", data);
+      const res = await apiRequest("POST", "/leads", data);
       return await res.json();
     },
     onSuccess: (response) => {
