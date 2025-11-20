@@ -1,0 +1,7 @@
+services:
+  - type: static_site
+    name: funil-frontend
+    root: frontend
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "dist"
+    domains: []
