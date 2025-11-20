@@ -1,89 +1,61 @@
-
-import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes.js";
+import express from "express";
 import path from "path";
-import { fileURLToPath } from "url";
+import fs from "fs";
+import compression from "compression";
+import cors from "cors";
 
 const app = express();
+app.set("trust proxy", true);
+app.disable("x-powered-by");
 
-// Necessário para resolver caminhos corretamente com ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-declare module "http" {
-  interface IncomingMessage {
-    rawBody: unknown;
-  }
-}
+const PORT = process.env.PORT || 3000;
 
 app.use(
-  express.json({
-    verify: (req, _res, buf) => {
-      req.rawBody = buf;
-    },
+  cors({
+    origin: "https://funil-captura-final-5-rpam.onrender.com",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
   })
 );
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
-// Middleware simples de log
-app.use((req, res, next) => {
-  const start = Date.now();
-  const pathReq = req.path;
+const logDir = path.join(__dirname, "..", "logs");
+if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
 
-  const originalJson = res.json;
-  res.json = function (body, ...args) {
-    (res as any)._body = body;
-    return originalJson.apply(res, [body, ...args]);
-  };
+const logFile = path.join(logDir, "server.log");
+const writeLog = (msg: string) =>
+  fs.appendFileSync(logFile, `[${new Date().toISOString()}] ${msg}\n`);
 
-  res.on("finish", () => {
-    if (pathReq.startsWith("/api")) {
-      const duration = Date.now() - start;
-      const logLine =
-        `${req.method} ${pathReq} ${res.statusCode} in ${duration}ms :: ` +
-        JSON.stringify((res as any)._body || {});
-      console.log(logLine);
-    }
+const leadsFilePath = path.join(__dirname, "..", "leads.json");
+if (!fs.existsSync(leadsFilePath)) fs.writeFileSync(leadsFilePath, "[]");
+
+// ROOT
+app.get("/", (_, res) => {
+  res.json({
+    status: "online",
+    message: "Backend operacional.",
+    timestamp: new Date().toISOString(),
   });
-
-  next();
 });
 
-(async () => {
-  await registerRoutes(app);
+// LEADS
+app.post("/leads", (req, res) => {
+  try {
+    const leadsData = JSON.parse(fs.readFileSync(leadsFilePath, "utf8"));
+    const newLead = {
+      id: Date.now(),
+      ...req.body,
+      createdAt: new Date().toISOString(),
+    };
+    leadsData.push(newLead);
+    fs.writeFileSync(leadsFilePath, JSON.stringify(leadsData, null, 2));
+    res.status(201).json({ success: true, lead: newLead });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
-  // Error Handler
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || 500;
-    res.status(status).json({
-      success: false,
-      message: err.message || "Erro interno",
-      data: null,
-    });
-  });
-
-  // ================================
-  // SERVIR FRONTEND HTML PURO
-  // ================================
-  const publicPath = path.join(__dirname, "..", "public");
-  app.use(express.static(publicPath));
-
-  app.get("/", (_req, res) => {
-    res.sendFile(path.join(publicPath, "captura.html"));
-  });
-
-  app.get("/confirmacao", (_req, res) => {
-    res.sendFile(path.join(publicPath, "confirmacao.html"));
-  });
-
-  app.get("/entrega", (_req, res) => {
-    res.sendFile(path.join(publicPath, "entrega.html"));
-  });
-
-  // Iniciar servidor
-  const port = parseInt(process.env.PORT || "5000", 10);
-  app.listen(port, "0.0.0.0", () => {
-    console.log(`Servidor rodando na porta ${port}`);
-  });
-})();
+app.listen(PORT, () => {});
