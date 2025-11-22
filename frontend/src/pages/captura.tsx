@@ -76,8 +76,8 @@ export default function Captura() {
       return await res.json();
     },
     onSuccess: (response) => {
-      if (response.success && response.data) {
-        localStorage.setItem("leadNome", response.data.nome);
+      if (response.success && response.lead) {
+        localStorage.setItem("leadNome", response.lead.nome);
         setLocation("/confirmacao");
       }
     },
