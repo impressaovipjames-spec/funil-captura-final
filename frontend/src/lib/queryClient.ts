@@ -9,8 +9,8 @@ export const queryClient = new QueryClient();
  * ============================================
  */
 export async function apiRequest(method: string, url: string, data?: any) {
-  // BACKEND OFICIAL EM PRODUÇÃO — Render Web Service
-  const API_URL = "https://funil-captura-final-5-rpam.onrender.com";
+  // BACKEND OFICIAL EM PRODUÇÃO — Render Web Service (Python)
+  const API_URL = "https://funil-backend-python.onrender.com";
 
   const response = await fetch(`${API_URL}${url}`, {
     method,
