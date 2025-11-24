@@ -47,7 +47,7 @@ export default function Home() {
             <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                     <img
-                        src="/src/assets/MARCA-MAE-HORIZONTAL SEM FUNDO.png"
+                        src="/logo-horizontal.png"
                         alt="VIPNEXUS IA"
                         className="h-10"
                     />

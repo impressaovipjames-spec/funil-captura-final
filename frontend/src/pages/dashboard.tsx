@@ -68,7 +68,7 @@ export default function Dashboard() {
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-8">
                         <img
-                            src="/src/assets/MARCA-MAE-VERTICAL SEM FUNDO.png"
+                            src="/logo-vertical.png"
                             alt="VIPNEXUS IA"
                             className="h-10"
                         />
@@ -229,10 +229,10 @@ export default function Dashboard() {
                                                 </div>
                                                 <div
                                                     className={`text-xs px-2 py-1 rounded ${report.status === "Pronto"
-                                                            ? "bg-green-500/20 text-green-400"
-                                                            : report.status === "Processando"
-                                                                ? "bg-yellow-500/20 text-yellow-400"
-                                                                : "bg-gray-500/20 text-gray-400"
+                                                        ? "bg-green-500/20 text-green-400"
+                                                        : report.status === "Processando"
+                                                            ? "bg-yellow-500/20 text-yellow-400"
+                                                            : "bg-gray-500/20 text-gray-400"
                                                         }`}
                                                 >
                                                     {report.status}
