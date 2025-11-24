@@ -26,6 +26,7 @@ app = FastAPI(
 # Configuração CORS
 origins = [
     "https://captura.vipnexusia.com.br",
+    "https://vipnexusia-captura.netlify.app",
     "http://localhost:5173",
     "http://localhost:3000",
     "*" # Temporário para testes, remover em prod estrito se necessário
