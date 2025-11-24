@@ -100,7 +100,7 @@ export default function Home() {
                         <Button
                             variant="primary"
                             size="lg"
-                            onClick={() => setLocation("/dashboard")}
+                            onClick={() => setLocation("/captura")}
                         >
                             Ativar Agora
                         </Button>
@@ -217,9 +217,9 @@ export default function Home() {
                         <Button
                             variant="primary"
                             size="lg"
-                            onClick={() => setLocation("/dashboard")}
+                            onClick={() => setLocation("/captura")}
                         >
-                            Acessar Dashboard Completo
+                            Garantir Meu Acesso
                         </Button>
                     </div>
                 </div>
