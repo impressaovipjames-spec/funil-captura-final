@@ -98,7 +98,7 @@ export default function Captura() {
         data-track="view"
         className="relative mx-auto flex max-w-6xl flex-col gap-16 px-6 py-16 sm:px-10 lg:py-20"
       >
-        <section className="grid items-center gap-12 lg:grid-cols-2">
+        <section className="grid items-start gap-12 lg:grid-cols-2">
           <div className="space-y-8">
             <span className="inline-flex items-center rounded-full bg-white/10 px-4 py-1 text-sm font-medium text-slate-100 backdrop-blur">
               Novo Playbook de Conversão 2024
@@ -129,69 +129,10 @@ export default function Captura() {
               </div>
             </dl>
           </div>
+
+          {/* FORMULÁRIO MOVIDO PARA O TOPO */}
           <GlassCard className="relative overflow-hidden">
             <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-indigo-500/20 blur-3xl" />
-            <p className="mb-6 text-sm uppercase tracking-[0.2rem] text-indigo-200">
-              Prova Social
-            </p>
-            <div className="space-y-6">
-              {testimonials.map((testimonial) => (
-                <div
-                  key={testimonial.name}
-                  className="rounded-2xl border border-white/5 bg-white/5 p-5 text-sm italic text-slate-100 transition hover:bg-white/10"
-                >
-                  “{testimonial.quote}”
-                  <div className="mt-4 text-xs uppercase tracking-wide text-slate-300 not-italic">
-                    {testimonial.name} · {testimonial.role}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        </section>
-
-        <section className="grid gap-8 lg:grid-cols-3">
-          {benefits.map((benefit) => (
-            <GlassCard key={benefit.title}>
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20 text-2xl">
-                {benefit.icon}
-              </div>
-              <h3 className="mt-4 text-xl font-semibold text-white">
-                {benefit.title}
-              </h3>
-              <p className="mt-2 text-sm text-slate-200">{benefit.description}</p>
-            </GlassCard>
-          ))}
-        </section>
-
-        <section className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <GlassCard className="order-2 space-y-6 text-slate-200 lg:order-1">
-            <div>
-              <p className="text-sm uppercase tracking-widest text-indigo-200">
-                Comunidade que converte
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold text-white">
-                “É como ter um time de growth 24/7 acompanhando seus leads.”
-              </h2>
-            </div>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
-                Automação ativada em minutos com templates validados e copy
-                sugerida.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
-                Painéis de performance prontos para apresentar à diretoria.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
-                Suporte humano e plano de crescimento personalizado.
-              </li>
-            </ul>
-          </GlassCard>
-
-          <GlassCard className="order-1 lg:order-2">
             <p className="text-sm uppercase tracking-widest text-indigo-200">
               Comece agora
             </p>
@@ -262,6 +203,71 @@ export default function Captura() {
                 quiser.
               </p>
             </form>
+          </GlassCard>
+        </section>
+
+        {/* Prova Social movida para baixo */}
+        <section>
+          <GlassCard className="relative overflow-hidden max-w-4xl mx-auto">
+            <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-indigo-500/20 blur-3xl" />
+            <p className="mb-6 text-sm uppercase tracking-[0.2rem] text-indigo-200">
+              Prova Social
+            </p>
+            <div className="grid md:grid-cols-2 gap-6">
+              {testimonials.map((testimonial) => (
+                <div
+                  key={testimonial.name}
+                  className="rounded-2xl border border-white/5 bg-white/5 p-5 text-sm italic text-slate-100 transition hover:bg-white/10"
+                >
+                  "{testimonial.quote}"
+                  <div className="mt-4 text-xs uppercase tracking-wide text-slate-300 not-italic">
+                    {testimonial.name} · {testimonial.role}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GlassCard>
+        </section>
+
+        <section className="grid gap-8 lg:grid-cols-3">
+          {benefits.map((benefit) => (
+            <GlassCard key={benefit.title}>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20 text-2xl">
+                {benefit.icon}
+              </div>
+              <h3 className="mt-4 text-xl font-semibold text-white">
+                {benefit.title}
+              </h3>
+              <p className="mt-2 text-sm text-slate-200">{benefit.description}</p>
+            </GlassCard>
+          ))}
+        </section>
+
+        <section className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <GlassCard className="order-2 space-y-6 text-slate-200 lg:order-1">
+            <div>
+              <p className="text-sm uppercase tracking-widest text-indigo-200">
+                Comunidade que converte
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold text-white">
+                “É como ter um time de growth 24/7 acompanhando seus leads.”
+              </h2>
+            </div>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-start gap-3">
+                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
+                Automação ativada em minutos com templates validados e copy
+                sugerida.
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
+                Painéis de performance prontos para apresentar à diretoria.
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
+                Suporte humano e plano de crescimento personalizado.
+              </li>
+            </ul>
           </GlassCard>
         </section>
       </main>
